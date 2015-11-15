@@ -107,14 +107,14 @@ Puppet::Type.type(:mysql_grant).provide(:mysql, :parent => Puppet::Provider::Mys
     # revoke grant option needs to be a extra query, because
     # "REVOKE ALL PRIVILEGES, GRANT OPTION [..]" is only valid mysql syntax
     # if no ON clause is used.
-    # It hast to be executed before "REVOKE ALL [..]" since a GRANT has to
+    # It has to be executed before "REVOKE ALL [..]" since a GRANT has to
     # exist to be executed successfully
     if revoke_privileges.include? 'ALL'
       query = "REVOKE GRANT OPTION ON #{table_string} FROM #{user_string}"
-      mysql([defaults_file, system_database, '-e', query].compact)
+      mysql([defaults_file, '-e', query].compact)
     end
     query = "REVOKE #{priv_string} ON #{table_string} FROM #{user_string}"
-    mysql([defaults_file, system_database, '-e', query].compact)
+    mysql([defaults_file, '-e', query].compact)
   end
 
   def destroy
